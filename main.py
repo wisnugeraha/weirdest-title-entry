@@ -18,8 +18,16 @@ def emit(line: str, out: str = OUT) -> None:
     with open(out, "w", encoding="utf-8") as f:
         f.write(line + "\n")
 
+def confirm(out: str = OUT) -> None:
+    with open(out, "rb") as f:
+        data = f.read()
+    text = data.decode("utf-8").rstrip("\n")
+    if text != LINE:
+        sys.exit(f"confirm failed: disk has {text[:40]!r}")
+
 def main() -> None:
     emit(LINE)
+    confirm(OUT)
 
 if __name__ == "__main__":
     main()
